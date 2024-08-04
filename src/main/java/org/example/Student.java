@@ -39,7 +39,7 @@ public class Student {
             System.out.println("2. SELECT ");
             System.out.println("3. SEARCH by ID ");
             System.out.println("4. SEARCH by name ");
-            System.out.println("5. UPDATE by ID ");
+            System.out.println("5. UPDATE by ID 123");
             System.out.println("6. DELETE by ID ");
             System.out.println("7. SORT by ID DESC");
             System.out.println("8. SORT by name A-Z");
