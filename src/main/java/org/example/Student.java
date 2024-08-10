@@ -1,8 +1,6 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Student {
@@ -24,7 +22,7 @@ public class Student {
     }
 
     public static void main(String[] args) {
-        Student.connection();
+//        Student.connection();
 
         Scanner sc = new Scanner(System.in);
         int op;
@@ -91,7 +89,81 @@ public class Student {
                     }
                     System.out.println("Insert Successfully");
                 }
+                case 2->{
+                    System.out.println("------ SELECT -------");
+                    try{
+                        Connection con = connection();
+                        String sql = "SELECT * FROM student";//sql
+                        Statement st = con.createStatement();// create statement to execute sql
+                        ResultSet rs = st.executeQuery(sql);// execute sql
+                        while(rs.next()){// get all data from result set
+                            System.out.println("ID = "+rs.getInt("id"));
+                            System.out.println("Name = "+rs.getString("name"));
+                            System.out.println("Gender = "+rs.getString("gender"));
+                            System.out.println("Score1 = "+rs.getFloat("score1"));
+                            System.out.println("Score2 = "+rs.getFloat("score2"));
+                            System.out.println("Score3 = "+rs.getFloat("score3"));
+                            System.out.println("Total = "+rs.getFloat("total"));
+                            System.out.println("Average = "+rs.getFloat("average"));
+                            System.out.println("Grade = "+rs.getString("grade"));
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                case 3->{
+                    System.out.println("------ SEARCH by ID -------");
+                    System.out.print("Enter id to search: ");
+                    int id = sc.nextInt();
+                    String sql = "SELECT * FROM student WHERE id = " + id;
+                    try {
+                        Connection con = connection();
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        while(rs.next()){
+                            System.out.println("ID = "+rs.getInt("id"));
+                            System.out.println("Name = "+rs.getString("name"));
+                            System.out.println("Gender = "+rs.getString("gender"));
+                            System.out.println("Score1 = "+rs.getFloat("score1"));
+                            System.out.println("Score2 = "+rs.getFloat("score2"));
+                            System.out.println("Score3 = "+rs.getFloat("score3"));
+                            System.out.println("Total = "+rs.getFloat("total"));
+                            System.out.println("Average = "+rs.getFloat("average"));
+                            System.out.println("Grade = "+rs.getString("grade"));
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                case 4->{
+                    System.out.println("------ SEARCH by Name -------");
+                    System.out.print("Enter name to search: ");
+                    sc.nextLine();
+                    String names = sc.nextLine();
+                    String sql = "SELECT * FROM student WHERE name LIKE ?" ;
+                    try {
+                        Connection con = connection();
+                        PreparedStatement ps = con.prepareStatement(sql);
+                        ps.setString(1, "%"+names+"%");
+                        ResultSet rs = ps.executeQuery();
 
+                        while(rs.next()){
+                            System.out.println("ID = "+rs.getInt("id"));
+                            System.out.println("Name = "+rs.getString("name"));
+                            System.out.println("Gender = "+rs.getString("gender"));
+                            System.out.println("Score1 = "+rs.getFloat("score1"));
+                            System.out.println("Score2 = "+rs.getFloat("score2"));
+                            System.out.println("Score3 = "+rs.getFloat("score3"));
+                            System.out.println("Total = "+rs.getFloat("total"));
+                            System.out.println("Average = "+rs.getFloat("average"));
+                            System.out.println("Grade = "+rs.getString("grade"));
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
             }
         }while(true);
     }
